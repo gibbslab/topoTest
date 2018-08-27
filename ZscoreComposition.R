@@ -8,6 +8,7 @@ ddist <- sort(as.vector(degree(input,mode = "total")),decreasing = TRUE)
 empty <- make_empty_graph(n = vcount(input),directed = FALSE)
 
 nodes_in <- nodes_out <- seq(vcount(input))
+edge_list <- NULL
 
 for(a in ddist){
   val <- sample(nodes_in,1)
@@ -16,9 +17,10 @@ for(a in ddist){
   edge <- sample(nodes_out,a)
   
   for(b in edge){
-      while(empty[b,val] == 1){
-        edge <- sample(nodes_out,a)
-      }
-    empty <- empty + edge(val, b)
+    edge_list <- c(edge_list,val,b)
+    if(empty[b,val] == 1){
+    b <- sample(nodes_out,1)
+    }
   }
+  add_edges(empty,edge_list)
 }

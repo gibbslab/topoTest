@@ -1,23 +1,24 @@
 library(igraph)
 
 input <- read.graph("~/Documentos/Data3.0/AZ/AlzheimerN.net",format = "ncol")
-loops <- TRUE
+loops <- FALSE
 
 ddist <- sort(as.vector(degree(input,mode = "total")),decreasing = TRUE)
 
 empty <- make_empty_graph(n = vcount(input),directed = FALSE)
 
-nodes <- seq(vcount(input))
-val <- sample(nodes,1)
+nodes_in <- nodes_out <- seq(vcount(input))
 
-for(a in seq(length(ddist))){
-  for(i in seq(ddist[a])){
-    edge <- sample(val,1)
-    if(loops  == TRUE){
-      while(edge == val){
-        edge <- sample(val,1)
+for(a in ddist){
+  val <- sample(nodes_in,1)
+  nodes_in <- nodes_in[!nodes_in %in% val]
+  
+  edge <- sample(nodes_out,a)
+  
+  for(b in edge){
+      while(empty[b,val] == 1){
+        edge <- sample(nodes_out,a)
       }
-    }
-    empty <- empty + edge(val,edge)
+    empty <- empty + edge(val, b)
   }
 }

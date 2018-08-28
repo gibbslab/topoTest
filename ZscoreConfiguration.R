@@ -21,11 +21,18 @@ for(i in seq(dim(ddist)[1])){
   nodes <- nodes[!nodes %in% del]
 }
 
-last <- which(as.vector(sort(degree(input))) != sort(degree(empty)))
-id_last <- sort(degree(empty))[last]
-final_vector <- na.omit(match(id_last,degree(empty)))
-
-empty <- empty %>% add_edges(final_vector[1:length(final_vector)-1])
+while(TRUE){
+  last <- which(as.vector(sort(degree(input))) != sort(degree(empty)))
+  id_last <- sort(degree(empty))[last]
+  final_vector <- na.omit(match(id_last,degree(empty)))
+  
+  if(length(final_vector)%%2==0){
+    empty <- empty %>% add_edges(final_vector[1:length(final_vector)])
+  }else{
+    empty <- empty %>% add_edges(final_vector[1:length(final_vector)-1]) 
+  }
+  if(length(final_vector)==0){FALSE}
+}
 
 
 

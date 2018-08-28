@@ -1,0 +1,13 @@
+Package: topoTest
+Type: Package
+Title: topoTest: An R package to do random distribution and robustness tests based on network topology
+Author: Juan David Henao [aut,cre], Andres Pinzon-Velasco [aut]
+Maintainer: Juan David Henao <judhenaosa@unal.edu.co>
+Description:
+License: GPL (>= 2)
+LazyData: TRUE
+Depends:
+    R (>= 2.10)
+Imports:
+Suggests:
+VignetteBuilder: knitr

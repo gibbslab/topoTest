@@ -6,16 +6,15 @@ input <- read.graph("~/Documentos/Data3.0/AZ/AlzheimerN.net","ncol")
 fraction <- 0.05
 
 hubs <- names(sort(degree(input),decreasing = TRUE))
-input.hubs <- input
+input.robus <- input
 before_array <- ""
 
 for(i in seq(0.005,fraction,0.005)){
   to_delete <- hubs[1:round(vcount(input)*i)]
-  input.hubs <- input.hubs - vertices(to_delete[as.vector(!na.omit(match(to_delete,before_array)))])
+  input.robus <- input.robus - vertices(as.vector(na.omit(to_delete[length(before_array)+1:length(to_delete)])))
   before_array <- to_delete
 }
 
-to_delete[-to_delete[as.vector(na.omit(match(to_delete,before_array)))]]
 
 
 clustering <- data.frame(transitivity(input,type = "local",isolates = "zero"),names(V(input)))
